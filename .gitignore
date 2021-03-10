@@ -2,6 +2,7 @@
 .vscode/
 *.swp
 venv-*/
+*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
