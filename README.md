@@ -1,3 +1,7 @@
+<center>
+<img src='https://i.imgur.com/P4piNcX.png'>
+</center>
+
 # Lichess Chess960 Arena Scheduler
 
 Source code for the analysis and automated scheduling for the Lichess
@@ -10,4 +14,6 @@ the dependance on opening theory.
 The following is a Chess960 game between **Magnus Carlson** (World Champion) and 
 **Hikaru Nakamura**, where Nakamura actually wins.
 
-<iframe width=600 height=371 src="https://lichess.org/study/embed/9hdiWME4/705ZtM9W" frameborder=0></iframe>
+<center>
+  <img src='doc/game.gif' width=400px>
+</center>
