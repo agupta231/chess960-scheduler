@@ -4,9 +4,10 @@
 
 # Lichess Chess960 Arena Scheduler
 
-Source code for the analysis and automated scheduling for the Lichess
+Source code for the analysis and automated scheduling for Lichess
 Chess960 team 
-([https://lichess.org/team/chess960](https://lichess.org/team/chess960)).
+([https://lichess.org/team/chess960](https://lichess.org/team/chess960))
+arenas.
 
 Chess960 is a variant which randomizes the pieces on the home rank to reduce
 the dependance on opening theory.
