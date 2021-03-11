@@ -1,5 +1,8 @@
 from dataclasses import dataclass
-from typing import Text
+from typing import Dict, Text, Union
+
+import datetime
+
 
 @dataclass
 class TimeControl:
@@ -13,6 +16,31 @@ class Level:
   min_elo: int = None
   max_elo: int = None
 
+
+@dataclass
+class Arena:
+  level: Level
+  time_control: TimeControl
+  start_date: datetime.datetime
+
+  duration: int = 120
+  min_rated: int = 10
+  
+  def prepare_request(self) -> Dict[Text, Union[Text, int, bool]]:
+    return {
+      'name': '{} {}+{} Chess960'.format(
+        self.level.name, self.time_control.clock, self.time_control.increment),
+      'clockTime': self.time_control.clock,
+      'clockIncrement': self.time_control.increment,
+      'minutes': self.duration,
+      'variant': 'chess960',
+      'description': '',
+      'conditions.teamMember.teamId': 'chess960',
+      'conditions.minRating.rating': self.level.min_elo,
+      'conditions.maxRating.rating': self.level.max_elo,
+      'conditions.nbRatedGame.nb': self.min_rated,
+    }
+  
 
 TIME_CONTROLS = [
   TimeControl(3, 2),
