@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from typing import Dict, Text, Union
 
 import datetime
+import dotenv
+import os
 
 
 @dataclass
@@ -27,7 +29,6 @@ class Arena:
   min_rated: int = 10
   
   def prepare_request(self) -> Dict[Text, Union[Text, int, bool]]:
-    print(self.start_datetime)
     request = {
       'name': '{} {}+{} Chess960'.format(
         self.level.name, self.time_control.clock, self.time_control.increment),
@@ -50,7 +51,11 @@ class Arena:
       request['conditions.maxRating.rating'] = self.level.max_elo
 
     return request
-  
+
+  def register(self):
+    endpoint = 'https://lichess.org/api/tournament'
+    
+    
 
 TIME_CONTROLS = [
   TimeControl(3, 2),
@@ -81,3 +86,8 @@ def make_daily_arenas(day: datetime.datetime):
       start += datetime.timedelta(hours=2)
 
   return arenas
+
+
+if __name__ == '__main__':
+  tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
+  arenas = make_daily_arenas(tomorrow)
