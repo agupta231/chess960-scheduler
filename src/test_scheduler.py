@@ -1,5 +1,5 @@
 from pytz import timezone
-import scheduler
+import schedule
 import unittest
 
 import datetime
@@ -17,9 +17,9 @@ class SchedulerTestCase(unittest.TestCase):
       tzinfo=datetime.timezone(-datetime.timedelta(hours=4)))
     start_timestamp = 1587370800000 # https://www.epochconverter.com/
     
-    a = scheduler.Arena(
-      scheduler.Level('name', min_elo, max_elo),
-      scheduler.TimeControl(clock, increment), start_datetime)
+    a = schedule.Arena(
+      schedule.Level('name', min_elo, max_elo),
+      schedule.TimeControl(clock, increment), start_datetime)
     r = a.prepare_request()
     
     self.assertEqual(r['clockTime'], clock)
@@ -29,8 +29,8 @@ class SchedulerTestCase(unittest.TestCase):
 
   def test_arena_no_min_elo(self):
     start_datetime = datetime.datetime(2020, 4, 20, 4, 20, 0)
-    a = scheduler.Arena(
-      scheduler.Level('name', None, 500), scheduler.TimeControl(0, 1), 
+    a = schedule.Arena(
+      schedule.Level('name', None, 500), schedule.TimeControl(0, 1), 
       start_datetime)
     r = a.prepare_request()
 
@@ -39,8 +39,8 @@ class SchedulerTestCase(unittest.TestCase):
 
   def test_arena_no_max_elo(self):
     start_datetime = datetime.datetime(2020, 4, 20, 4, 20, 0)
-    a = scheduler.Arena(
-      scheduler.Level('name', 500, None), scheduler.TimeControl(0, 1), 
+    a = schedule.Arena(
+      schedule.Level('name', 500, None), schedule.TimeControl(0, 1), 
       start_datetime)
     r = a.prepare_request()
 
