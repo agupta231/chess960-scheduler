@@ -27,6 +27,7 @@ class Arena:
   min_rated: int = 10
   
   def prepare_request(self) -> Dict[Text, Union[Text, int, bool]]:
+    print(self.start_datetime)
     request = {
       'name': '{} {}+{} Chess960'.format(
         self.level.name, self.time_control.clock, self.time_control.increment),

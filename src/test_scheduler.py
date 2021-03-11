@@ -1,4 +1,5 @@
 # from . import scheduler
+from pytz import timezone
 import scheduler
 import unittest
 
@@ -12,7 +13,9 @@ class SchedulerTestCase(unittest.TestCase):
     min_elo = 69
     max_elo = 420
 
-    start_datetime = datetime.datetime(2020, 4, 20, 4, 20, 0)
+    start_datetime = datetime.datetime(
+      2020, 4, 20, 4, 20, 0, 
+      tzinfo=datetime.timezone(-datetime.timedelta(hours=4)))
     start_timestamp = 1587370800 # https://www.epochconverter.com/
     
     a = scheduler.Arena(
