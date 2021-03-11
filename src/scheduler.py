@@ -4,6 +4,8 @@ from typing import Dict, Text, Union
 import datetime
 import dotenv
 import os
+import pathlib
+import requests
 
 
 @dataclass
@@ -53,9 +55,11 @@ class Arena:
     return request
 
   def register(self):
-    endpoint = 'https://lichess.org/api/tournament'
-    
-    
+    headers = {'Authorization': 'Bearer {}'.format(os.getenv('TOKEN'))}
+    data = self.prepare_request()
+    return requests.post('https://lichess.org/api/tournament', 
+                         headers=headers, data=data)
+
 
 TIME_CONTROLS = [
   TimeControl(3, 2),
@@ -89,5 +93,9 @@ def make_daily_arenas(day: datetime.datetime):
 
 
 if __name__ == '__main__':
-  tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
-  arenas = make_daily_arenas(tomorrow)
+  src = pathlib.Path(__file__).resolve().parent
+  dotenv.load_dotenv(src / '.env')
+  print(os.getenv('TOKEN'))
+
+  # tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
+  # arenas = make_daily_arenas(tomorrow)
