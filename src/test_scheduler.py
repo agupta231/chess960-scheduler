@@ -1,4 +1,3 @@
-# from . import scheduler
 from pytz import timezone
 import scheduler
 import unittest

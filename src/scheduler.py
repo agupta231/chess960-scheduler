@@ -64,3 +64,20 @@ LEVELS = [
   Level('Intermediate', 1400, 1700),
   Level('Master', 1600, None),
 ]
+
+
+def make_daily_arenas(day: datetime.datetime):
+  start = datetime.datetime(day.year, day.month, day.day, 0, 0, 0)
+  days = (start - datetime.datetime(1970, 1, 1, 0, 0, 0)).days
+  
+  time_index = days % len(TIME_CONTROLS)
+  
+  arenas = []
+  for i in range(4): 
+    for j in range(3): 
+      arenas.append(Arena(
+        LEVELS[j], TIME_CONTROLS[(time_index + i + j) % 4], start))
+
+      start += datetime.timedelta(hours=2)
+
+  return arenas
