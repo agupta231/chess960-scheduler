@@ -34,7 +34,9 @@ class Arena:
       'clockIncrement': self.time_control.increment,
       'minutes': self.duration,
       'variant': 'chess960',
-      'description': '',
+      'description': 'Daily Chess960 Arena. Times cycle daily so that everyone'
+        'gets a chance to play their favorite time control. Please put all'
+        'suggestions in the forum! Have fun :)',
       'conditions.teamMember.teamId': 'chess960',
       'conditions.minRating.rating': self.level.min_elo,
       'conditions.maxRating.rating': self.level.max_elo,
