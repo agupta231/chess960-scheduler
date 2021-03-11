@@ -36,7 +36,7 @@ class Arena:
       'startDate': int(self.start_datetime.timestamp()),
       'variant': 'chess960',
       'description': 'Daily Chess960 Arena. Times cycle daily so that everyone'
-        'gets a chance to play their favorite time control. Please put all'
+        'gets a chance to play their favorite time control. Please put all '
         'suggestions in the forum! Have fun :)',
       'conditions.teamMember.teamId': 'chess960',
       'conditions.nbRatedGame.nb': self.min_rated,
@@ -46,7 +46,7 @@ class Arena:
       request['conditions.minRating.rating'] = self.level.min_elo
 
     if self.level.max_elo:
-      request['conditions.maxRating.rating'] = self.level.max_elo,
+      request['conditions.maxRating.rating'] = self.level.max_elo
 
     return request
   

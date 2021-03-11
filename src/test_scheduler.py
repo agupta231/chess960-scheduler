@@ -1,4 +1,4 @@
-#from . import scheduler
+# from . import scheduler
 import scheduler
 import unittest
 
@@ -16,7 +16,7 @@ class SchedulerTestCase(unittest.TestCase):
     start_timestamp = 1587370800 # https://www.epochconverter.com/
     
     a = scheduler.Arena(
-      scheduler.Level(min_elo, max_elo),
+      scheduler.Level('name', min_elo, max_elo),
       scheduler.TimeControl(clock, increment), start_datetime)
     r = a.prepare_request()
     
@@ -24,6 +24,26 @@ class SchedulerTestCase(unittest.TestCase):
     self.assertEqual(r['clockIncrement'], increment)
     self.assertEqual(r['minutes'], 120)
     self.assertEqual(r['startDate'], start_timestamp)
+
+  def test_arena_no_min_elo(self):
+    start_datetime = datetime.datetime(2020, 4, 20, 4, 20, 0)
+    a = scheduler.Arena(
+      scheduler.Level('name', None, 500), scheduler.TimeControl(0, 1), 
+      start_datetime)
+    r = a.prepare_request()
+
+    self.assertNotIn('conditions.minRating.rating', r)
+    self.assertEqual(r['conditions.maxRating.rating'], 500)
+
+  def test_arena_no_max_elo(self):
+    start_datetime = datetime.datetime(2020, 4, 20, 4, 20, 0)
+    a = scheduler.Arena(
+      scheduler.Level('name', 500, None), scheduler.TimeControl(0, 1), 
+      start_datetime)
+    r = a.prepare_request()
+
+    self.assertNotIn('conditions.maxRating.rating', r)
+    self.assertEqual(r['conditions.minRating.rating'], 500)
 
 
 if __name__ == '__main__':
