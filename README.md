@@ -3,6 +3,7 @@
 </p>
 
 # Lichess Chess960 Arena Scheduler
+[![Build](https://github.com/agupta231/chess960-scheduler/actions/workflows/python-test-coverage.yml/badge.svg)](https://github.com/agupta231/chess960-scheduler/actions/workflows/python-test-coverage.yml)
 
 Source code for the analysis and automated scheduling for Lichess
 Chess960 team 
