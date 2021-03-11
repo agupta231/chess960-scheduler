@@ -15,7 +15,7 @@ class SchedulerTestCase(unittest.TestCase):
     start_datetime = datetime.datetime(
       2020, 4, 20, 4, 20, 0, 
       tzinfo=datetime.timezone(-datetime.timedelta(hours=4)))
-    start_timestamp = 1587370800 # https://www.epochconverter.com/
+    start_timestamp = 1587370800000 # https://www.epochconverter.com/
     
     a = scheduler.Arena(
       scheduler.Level('name', min_elo, max_elo),

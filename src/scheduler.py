@@ -38,7 +38,7 @@ class Arena:
       'clockTime': self.time_control.clock,
       'clockIncrement': self.time_control.increment,
       'minutes': self.duration,
-      'startDate': int(self.start_datetime.timestamp()),
+      'startDate': int(self.start_datetime.timestamp()) * 1000,
       'variant': 'chess960',
       'description': 'Daily Chess960 Arena. Times cycle daily so that everyone'
         'gets a chance to play their favorite time control. Please put all '
@@ -114,13 +114,16 @@ if __name__ == '__main__':
 
   console_handler = logging.StreamHandler()
   console_handler.setFormatter(formatter)
-  console_handler.setLevel(logging.WARNING)
+  console_handler.setLevel(logging.INFO)
   logger.addHandler(console_handler)
 
   tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
   arenas = make_daily_arenas(tomorrow)
 
-  logger.info(f'Scheduling {arenas} arenas for {tomorrow}')
+  logger.info(f'Scheduling {len(arenas)} arenas for {tomorrow}')
   for a in arenas:
-    a.register()
-    logger.info('scheduled {}'.format(a.prepare_request()))
+    response = a.register()
+    if response.status_code != 200:
+      logger.error('Received error when scheduling {}'.format(a.prepare_request))
+    else:
+      logger.info('scheduled {}'.format(a.prepare_request()))
