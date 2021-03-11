@@ -3,6 +3,7 @@ from typing import Dict, Text, Union
 
 import datetime
 import dotenv
+import logging
 import os
 import pathlib
 import requests
@@ -95,7 +96,31 @@ def make_daily_arenas(day: datetime.datetime):
 if __name__ == '__main__':
   src = pathlib.Path(__file__).resolve().parent
   dotenv.load_dotenv(src / '.env')
-  print(os.getenv('TOKEN'))
 
-  # tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
-  # arenas = make_daily_arenas(tomorrow)
+  logs = src / 'logs/'
+  logs.mkdir(parents=True, exist_ok=True)
+
+  logger = logging.getLogger('chess960-scheduler')
+  logger.setLevel(logging.INFO)
+  formatter = logging.Formatter(
+    '[%(levelname)s] {%(funcName)s | %(filename)s} %(asctime)s:  %(message)s')
+
+  file_handler = logging.FileHandler(
+    filename=logs / '{}.log'.format(datetime.datetime.now()),
+    encoding='utf-8', mode='w')
+  file_handler.setFormatter(formatter)
+  file_handler.setLevel(logging.DEBUG)
+  logger.addHandler(file_handler)
+
+  console_handler = logging.StreamHandler()
+  console_handler.setFormatter(formatter)
+  console_handler.setLevel(logging.WARNING)
+  logger.addHandler(console_handler)
+
+  tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
+  arenas = make_daily_arenas(tomorrow)
+
+  logger.info(f'Scheduling {arenas} arenas for {tomorrow}')
+  for a in arenas:
+    a.register()
+    logger.info('scheduled {}'.format(a.prepare_request()))
