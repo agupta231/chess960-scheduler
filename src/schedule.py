@@ -28,19 +28,19 @@ class Arena:
   time_control: TimeControl
   start_datetime: datetime.datetime
 
-  duration: int = 120
-  min_rated: int = 10
+  duration: int = 55
+  min_rated: int = 0
   
   def prepare_request(self) -> Dict[Text, Union[Text, int, bool]]:
     request = {
-      'name': '{} {}+{} Chess960'.format(
+      'name': 'Hourly {}s Chess960'.format(
         self.level.name, self.time_control.clock, self.time_control.increment),
       'clockTime': self.time_control.clock,
       'clockIncrement': self.time_control.increment,
       'minutes': self.duration,
       'startDate': int(self.start_datetime.timestamp()) * 1000,
       'variant': 'chess960',
-      'description': 'Daily Chess960 Arena. Times cycle daily so that everyone'
+      'description': 'Daily Chess960 Arena. Times cycle daily so that everyone '
         'gets a chance to play their favorite time control. Please put all '
         'suggestions in the forum! Have fun :)',
       'conditions.teamMember.teamId': 'chess960',
@@ -83,12 +83,12 @@ def make_daily_arenas(day: datetime.datetime):
   time_index = days % len(TIME_CONTROLS)
   
   arenas = []
-  for i in range(4): 
+  for i in range(8): 
     for j in range(3): 
       arenas.append(Arena(
         LEVELS[j], TIME_CONTROLS[(time_index + i + j) % 4], start))
 
-      start += datetime.timedelta(hours=2)
+      start += datetime.timedelta(hours=1)
 
   return arenas
 
@@ -125,5 +125,6 @@ if __name__ == '__main__':
     response = a.register()
     if response.status_code != 200:
       logger.error('Received error when scheduling {}'.format(a.prepare_request))
+      logger.error(str(response.content))
     else:
       logger.info('scheduled {}'.format(a.prepare_request()))
