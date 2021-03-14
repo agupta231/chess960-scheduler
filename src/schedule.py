@@ -32,9 +32,9 @@ class Arena:
   min_rated: int = 0
   
   def prepare_request(self) -> Dict[Text, Union[Text, int, bool]]:
+    label = 'Under {}'.format(self.level.max_elo) if self.level.max_elo else 'Open'
     request = {
-      'name': 'Hourly {}s Chess960'.format(
-        self.level.name, self.time_control.clock, self.time_control.increment),
+      'name': f'Hourly {label} Chess960',
       'clockTime': self.time_control.clock,
       'clockIncrement': self.time_control.increment,
       'minutes': self.duration,
@@ -71,8 +71,8 @@ TIME_CONTROLS = [
 
 LEVELS = [
   Level('Beginner', None, 1500),
-  Level('Intermediate', 1400, 1700),
-  Level('Master', 1600, None),
+  Level('Intermediate', None, 1700),
+  Level('Master', None, None),
 ]
 
 

@@ -24,7 +24,7 @@ class SchedulerTestCase(unittest.TestCase):
     
     self.assertEqual(r['clockTime'], clock)
     self.assertEqual(r['clockIncrement'], increment)
-    self.assertEqual(r['minutes'], 120)
+    self.assertEqual(r['minutes'], 55)
     self.assertEqual(r['startDate'], start_timestamp)
 
   def test_arena_no_min_elo(self):
